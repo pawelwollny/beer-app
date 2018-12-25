@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BeerTableComponent implements OnInit {
 
+  columnNames: string[] = ['First Brewery', 'Second Brewery', 'Third Brewery'];
+
   constructor() { }
 
   ngOnInit() {
