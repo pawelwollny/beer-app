@@ -57,12 +57,13 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
       this.updateBreweryName(breweryName);
     }
   }
-
+  
   loadMoreBeers(): void {
     this.beersOffset++;
 
     if (this.dataSource != null && this.beersFromSelectedBrewery != null) {
-      this.dataSource.data = this.beersFromSelectedBrewery.slice(0, this.beersLimit * this.beersOffset);
+      const limitedBeers: Beer[] = this.beersFromSelectedBrewery.slice(0, this.beersLimit * this.beersOffset);
+      this.dataSource.data = this.getSortedBeersFromBrewery(this.selectedBrewery, limitedBeers);
     }
   }
 

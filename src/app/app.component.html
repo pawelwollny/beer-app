@@ -1,4 +1,6 @@
-<app-menu></app-menu>
-<div class="container-fluid">
-  <router-outlet></router-outlet>
+<div [ngClass]="{'dark-theme': isDarkThemeOn}">
+  <app-menu></app-menu>
+  <mat-card>
+    <router-outlet></router-outlet>
+  </mat-card>
 </div>

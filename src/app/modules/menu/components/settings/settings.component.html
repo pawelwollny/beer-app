@@ -2,11 +2,11 @@
 <div mat-dialog-content>
   <div class="mt-3">
     <span>Turn dark theme on/off:</span>
-    <span class="ml-3"><mat-slide-toggle></mat-slide-toggle></span>
+    <span class="ml-3"><mat-slide-toggle [checked]="isDarkThemeOn" (change)="saveDarkThemeState($event)"></mat-slide-toggle></span>
   </div>
   <div class="mt-3">
     <span>Select number of elements loaded at once: </span>
-    <mat-select placeholder="Limit" [(ngModel)]="elementsLimit" (selectionChange)="saveElementsLimit($event)">
+    <mat-select placeholder="Limit" [value]="elementsLimit" (selectionChange)="saveElementsLimit($event)">
       <mat-option *ngFor="let limit of elementLoadingLimits" [value]="limit">
         {{ limit }}
       </mat-option>
@@ -14,7 +14,7 @@
   </div>
   <div class="mt-3">
     <span>Sort by:</span>
-    <mat-select placeholder="Name" [(ngModel)]="sortColumn" (selectionChange)="saveSortColumn($event)">
+    <mat-select placeholder="Name" [value]="sortColumn" (selectionChange)="saveSortColumn($event)">
       <mat-option *ngFor="let columnName of columnNames" [value]="columnName">
         {{ columnName }}
       </mat-option>

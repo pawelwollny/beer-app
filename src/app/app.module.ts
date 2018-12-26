@@ -7,7 +7,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuModule } from './modules/menu/menu.module';
-import { MatDialog } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { MatDialog } from '@angular/material';
       prefix: 'beer-app',
       storageType: 'localStorage'
     }),
-    MenuModule
+    MatCardModule,
+    MenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

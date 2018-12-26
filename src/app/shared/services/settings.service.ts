@@ -8,6 +8,7 @@ export class SettingsService {
 
   elementsLimitChanged: Subject<number> = new Subject<number>();
   sortColumnChanged: Subject<string> = new Subject<string>();
+  themeChanged: Subject<boolean> = new Subject<boolean>();
 
   constructor() { }
 }

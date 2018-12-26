@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatSelectChange } from '@angular/material';
-import { SettingsService } from 'src/app/shared/services/settings.service';
+import { MatDialogRef, MatSelectChange, MatSlideToggleChange } from '@angular/material';
 import { LocalStorageService } from 'angular-2-local-storage';
+
+import { SettingsService } from 'src/app/shared/services/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -23,11 +24,14 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.elementsLimit = this.localStorageService.get('elementsLimit'); 
     this.sortColumn = this.localStorageService.get('sortColumn');
-    // this.isDarkThemeOn = this.localStorageService.get('isDarkThemeOn');
+    this.isDarkThemeOn = this.localStorageService.get('isDarkThemeOn');
   }
 
-  saveThemeType() {
-    // this.settingsService.saveThemeType();
+  saveDarkThemeState($event: MatSlideToggleChange) {
+    const isDarkThemeOn: boolean = $event.checked;
+
+    this.localStorageService.set('isDarkThemeOn', isDarkThemeOn);
+    this.settingsService.themeChanged.next(isDarkThemeOn);
   }
 
   saveElementsLimit($event: MatSelectChange) {
