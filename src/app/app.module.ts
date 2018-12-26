@@ -1,12 +1,13 @@
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatIconModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocalStorageModule } from 'angular-2-local-storage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { BeerModule } from './modules/beer/beer.module';
 
 @NgModule({
   declarations: [
@@ -14,11 +15,14 @@ import { BeerModule } from './modules/beer/beer.module';
   ],
   imports: [    
     AppRoutingModule,
-    BeerModule,
     BrowserAnimationsModule,
     BrowserModule,
-    HttpClientJsonpModule,
+    FormsModule,
     HttpClientModule,
+    LocalStorageModule.withConfig({
+      prefix: 'beer-app',
+      storageType: 'localStorage'
+    }),
     MatButtonModule,
     MatCardModule,
     MatIconModule,

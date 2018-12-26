@@ -1,3 +1,10 @@
 table {
     width: 100%;
 }
+
+.circle-thumbnail {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    border: 2px solid gray;
+}

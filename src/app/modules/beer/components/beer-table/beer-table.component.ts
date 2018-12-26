@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 
 import { Beer } from 'src/app/shared/models/beer';
 import { BeerService } from '../../beer.service';
@@ -13,6 +13,7 @@ export class BeerTableComponent implements OnInit {
   allBeers: Beer[] = [];
   breweries: Set<string>;
   columnNames: string[] = ['First Brewery', 'Second Brewery', 'Third Brewery'];
+  isDataLoaded: boolean = false;
   
   constructor(private beerService: BeerService) {
   }
@@ -21,6 +22,7 @@ export class BeerTableComponent implements OnInit {
     this.beerService.getAllBeers().subscribe(allBeers => {
       this.allBeers = allBeers;
       this.breweries = this.getAllBreweries();
+      this.isDataLoaded = true;
     })
   }
 

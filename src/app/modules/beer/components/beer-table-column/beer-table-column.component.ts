@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSelectChange, MatTableDataSource } from '@angular/material';
 
-import { BeerService } from '../../beer.service';
 import { Beer } from 'src/app/shared/models/beer';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-beer-table-column',
@@ -13,16 +13,21 @@ export class BeerTableColumnComponent implements OnInit {
 
   @Input() allBeers: Beer[] = [];
   @Input() breweries: Beer[] = [];
+  @Input() columnId: number;
 
   beersFromSelectedBrewery: Beer[] = [];
   beersLimit: number = 15;
   beersOffset: number = 0;
   columnsToDisplay: string[] = ['name', 'type', 'price', 'thumbnail'];
   dataSource: MatTableDataSource<Beer> = new MatTableDataSource<Beer>();
-  
-  constructor() { }
+  selectedBrewery: string;
+
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.selectedBrewery = this.localStorageService.get(`breweryName${this.columnId}`);
+
+    this.updateBreweryName(this.selectedBrewery); 
   }
 
   isMoreBeersToLoad(): boolean {
@@ -35,9 +40,8 @@ export class BeerTableColumnComponent implements OnInit {
     if ($event != null) {
       const breweryName = $event.value;
 
-      this.beersFromSelectedBrewery = this.getSortedBeersFromBrewery(breweryName);
-      this.beersOffset = 0;
-      this.loadMoreBeers();
+      this.localStorageService.set(`breweryName${this.columnId}`, breweryName);
+      this.updateBreweryName(breweryName);
     }
   }
 
@@ -57,5 +61,11 @@ export class BeerTableColumnComponent implements OnInit {
     }
 
     return beersFromBrewery;
+  }
+
+  private updateBreweryName(breweryName: string): void {
+    this.beersFromSelectedBrewery = this.getSortedBeersFromBrewery(breweryName);
+    this.beersOffset = 0;
+    this.loadMoreBeers();
   }
 }

@@ -3,7 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '**',
+    path: 'beers',
+    loadChildren: './modules/beer/beer.module#BeerModule'
+  },
+  {
+    path: 'settings',
+    loadChildren: './modules/settings/settings.module#SettingsModule'
+  },
+  {
+    path: '',
     redirectTo: '/beers',
     pathMatch: 'full'
   }
