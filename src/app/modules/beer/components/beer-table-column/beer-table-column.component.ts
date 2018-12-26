@@ -1,22 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { MatSelectChange, MatTableDataSource } from '@angular/material';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 import { Beer } from 'src/app/shared/models/beer';
-import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-beer-table-column',
   templateUrl: './beer-table-column.component.html',
   styleUrls: ['./beer-table-column.component.scss']
 })
-export class BeerTableColumnComponent implements OnInit {
+export class BeerTableColumnComponent implements OnInit, OnChanges {
 
   @Input() allBeers: Beer[] = [];
+  @Input() beersLimit: number;
   @Input() breweries: Beer[] = [];
   @Input() columnId: number;
+  @Input() sortColumn: string;
 
   beersFromSelectedBrewery: Beer[] = [];
-  beersLimit: number = 15;
   beersOffset: number = 0;
   columnsToDisplay: string[] = ['name', 'type', 'price', 'thumbnail'];
   dataSource: MatTableDataSource<Beer> = new MatTableDataSource<Beer>();
@@ -25,9 +26,21 @@ export class BeerTableColumnComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.beersLimit = this.localStorageService.get('elementsLimit');
+    this.sortColumn = this.localStorageService.get('sortColumn');
     this.selectedBrewery = this.localStorageService.get(`breweryName${this.columnId}`);
 
     this.updateBreweryName(this.selectedBrewery); 
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['beersLimit']) {
+      this.resetBeers();
+    }
+
+    if (changes['sortColumn']) {
+      this.dataSource.data = this.getSortedBeersFromBrewery(this.selectedBrewery, this.dataSource.data)
+    }
   }
 
   isMoreBeersToLoad(): boolean {
@@ -53,18 +66,32 @@ export class BeerTableColumnComponent implements OnInit {
     }
   }
 
-  private getSortedBeersFromBrewery(breweryName: string): Beer[] {
-    const beersFromBrewery: Beer[] = this.allBeers.filter(beer => beer.brewer === breweryName);
+  private getSortedBeersFromBrewery(breweryName: string, beers: Beer[]): Beer[] {
+    const beersFromBrewery: Beer[] = beers.filter(beer => beer.brewer === breweryName);
 
     if (beersFromBrewery != null) {
-      beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.name < secondBeer.name ? -1 : 1);
+      switch(this.sortColumn) {
+        case('type'):
+          beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.type < secondBeer.type ? -1 : 1);
+          break;
+        case('price'):
+          beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.price - secondBeer.price);
+          break;
+        default:  
+          beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.name < secondBeer.name ? -1 : 1);      
+          break;
+      }
     }
 
     return beersFromBrewery;
   }
 
   private updateBreweryName(breweryName: string): void {
-    this.beersFromSelectedBrewery = this.getSortedBeersFromBrewery(breweryName);
+    this.beersFromSelectedBrewery = this.getSortedBeersFromBrewery(breweryName, this.allBeers);
+    this.resetBeers();
+  }
+
+  private resetBeers() {
     this.beersOffset = 0;
     this.loadMoreBeers();
   }

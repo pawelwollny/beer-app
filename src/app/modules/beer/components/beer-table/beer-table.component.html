@@ -2,7 +2,12 @@
   <div class="row">
     <ng-container *ngFor="let columnName of columnNames; index as i">
       <div class="col">
-        <app-beer-table-column [allBeers]="allBeers" [breweries]="breweries" [columnId]="i"></app-beer-table-column>
+        <app-beer-table-column [allBeers]="allBeers" 
+                               [beersLimit]="beersLimit" 
+                               [breweries]="breweries" 
+                               [columnId]="i"
+                               [sortColumn]="sortColumn">
+        </app-beer-table-column>
       </div>
     </ng-container>
   </div>

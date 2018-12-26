@@ -7,11 +7,12 @@ const routes: Routes = [
     loadChildren: './modules/beer/beer.module#BeerModule'
   },
   {
-    path: 'settings',
-    loadChildren: './modules/settings/settings.module#SettingsModule'
+    path: '',
+    redirectTo: '/beers',
+    pathMatch: 'full'
   },
   {
-    path: '',
+    path: '**',
     redirectTo: '/beers',
     pathMatch: 'full'
   }

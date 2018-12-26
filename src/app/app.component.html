@@ -1,20 +1,4 @@
-<mat-toolbar>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button [routerLink]="['/']" mat-menu-item>
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
-    </button>
-    <button [routerLink]="['/settings']" mat-menu-item>
-      <mat-icon>settings</mat-icon>
-      <span>Settings</span>
-    </button>
-  </mat-menu>
-  <span>Beer App</span>
-</mat-toolbar>
-
+<app-menu></app-menu>
 <div class="container-fluid">
   <router-outlet></router-outlet>
 </div>
