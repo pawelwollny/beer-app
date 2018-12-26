@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsCardComponent } from './components/settings/settings-card.component';
 import { SettingsRoutingModule } from './settings-routing.module';
 
 @NgModule({
-  declarations: [SettingsComponent],
+  declarations: [SettingsCardComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule
