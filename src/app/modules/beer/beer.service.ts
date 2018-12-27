@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BeerService {
 
-  beerApiUrl: string = environment.beerApiUrl; 
+  beerApiUrl: string = environment.beerApiUrl;
 
   constructor(private httpClient: HttpClient) { }
 

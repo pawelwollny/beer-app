@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatIconModule, MatTableModule, MatSelectModule } from '@angular/material'
+import { MatButtonModule, MatIconModule, MatTableModule, MatSelectModule } from '@angular/material';
+import { NgxImageGalleryModule } from 'ngx-image-gallery';
 
 import { BeerRoutingModule } from './beer-routing.module';
 import { BeerTableComponent } from './components/beer-table/beer-table.component';
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxImageGalleryModule
   ]
 })
 export class BeerModule { }

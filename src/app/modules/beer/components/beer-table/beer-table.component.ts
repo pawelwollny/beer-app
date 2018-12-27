@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GALLERY_IMAGE, NgxImageGalleryComponent } from 'ngx-image-gallery';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,9 +19,11 @@ export class BeerTableComponent implements OnInit, OnDestroy {
   breweries: Set<string>;
   columnNames: string[] = ['First Brewery', 'Second Brewery', 'Third Brewery'];
   destroy$: Subject<null> = new Subject();
-  isDataLoaded: boolean = false;
+  isDataLoaded = false;
   sortColumn: string;
-  
+
+  @ViewChild(NgxImageGalleryComponent) ngxImageGallery: NgxImageGalleryComponent;
+
   constructor(private beerService: BeerService,
               private settingsService: SettingsService) {
   }
@@ -30,7 +33,7 @@ export class BeerTableComponent implements OnInit, OnDestroy {
       this.allBeers = allBeers;
       this.breweries = this.getAllBreweries();
       this.isDataLoaded = true;
-    })
+    });
 
     this.settingsService.elementsLimitChanged.pipe(takeUntil(this.destroy$)).subscribe(elementsLimit => {
       this.beersLimit = elementsLimit;
@@ -44,6 +47,12 @@ export class BeerTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  showFullSizeImage(imageUrl: string) {
+    const image: GALLERY_IMAGE = { url: imageUrl };
+    this.ngxImageGallery.images = [image];
+    this.ngxImageGallery.open();
   }
 
   private getAllBreweries(): Set<string> {

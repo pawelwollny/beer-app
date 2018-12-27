@@ -1,14 +1,16 @@
 <div *ngIf="isDataLoaded" class="container-fluid">
   <div class="row">
-    <ng-container *ngFor="let columnName of columnNames; index as i">
+    <ng-container *ngFor="let columnName of columnNames">
       <div class="col">
         <app-beer-table-column [allBeers]="allBeers" 
                                [beersLimit]="beersLimit" 
                                [breweries]="breweries" 
-                               [columnId]="i"
-                               [sortColumn]="sortColumn">
+                               [columnName]="columnName"
+                               [sortColumn]="sortColumn"
+                               (thumbnailClick)="showFullSizeImage($event)">
         </app-beer-table-column>
       </div>
     </ng-container>
   </div>
+  <ngx-image-gallery></ngx-image-gallery>
 </div>

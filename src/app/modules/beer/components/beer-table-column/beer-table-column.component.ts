@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component,  EventEmitter, OnInit, Input, SimpleChanges, OnChanges, Output } from '@angular/core';
 import { MatSelectChange, MatTableDataSource } from '@angular/material';
 import { LocalStorageService } from 'angular-2-local-storage';
 
@@ -14,11 +14,13 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
   @Input() allBeers: Beer[] = [];
   @Input() beersLimit: number;
   @Input() breweries: Beer[] = [];
-  @Input() columnId: number;
+  @Input() columnName: string;
   @Input() sortColumn: string;
 
+  @Output() thumbnailClick: EventEmitter<string> = new EventEmitter<string>();
+
   beersFromSelectedBrewery: Beer[] = [];
-  beersOffset: number = 0;
+  beersOffset = 0;
   columnsToDisplay: string[] = ['name', 'type', 'price', 'thumbnail'];
   dataSource: MatTableDataSource<Beer> = new MatTableDataSource<Beer>();
   selectedBrewery: string;
@@ -28,9 +30,9 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.beersLimit = this.localStorageService.get('elementsLimit');
     this.sortColumn = this.localStorageService.get('sortColumn');
-    this.selectedBrewery = this.localStorageService.get(`breweryName${this.columnId}`);
+    this.selectedBrewery = this.localStorageService.get(`breweryName${this.columnName}`);
 
-    this.updateBreweryName(this.selectedBrewery); 
+    this.updateBreweryName(this.selectedBrewery);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,25 +41,29 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
     }
 
     if (changes['sortColumn']) {
-      this.dataSource.data = this.getSortedBeersFromBrewery(this.selectedBrewery, this.dataSource.data)
+      this.dataSource.data = this.getSortedBeersFromBrewery(this.selectedBrewery, this.dataSource.data);
     }
   }
 
   isMoreBeersToLoad(): boolean {
-    const alreadyLoadedBeersNumber = this.beersOffset * this.beersLimit; 
+    const alreadyLoadedBeersNumber = this.beersOffset * this.beersLimit;
 
     return  alreadyLoadedBeersNumber < this.beersFromSelectedBrewery.length;
-  };
+  }
 
   onSelectionChange($event: MatSelectChange): void {
     if ($event != null) {
       const breweryName = $event.value;
 
-      this.localStorageService.set(`breweryName${this.columnId}`, breweryName);
+      this.localStorageService.set(`breweryName${this.columnName}`, breweryName);
       this.updateBreweryName(breweryName);
     }
   }
-  
+
+  onThumbnailClick(imageUrl: string): void {
+    this.thumbnailClick.emit(imageUrl);
+  }
+
   loadMoreBeers(): void {
     this.beersOffset++;
 
@@ -71,15 +77,15 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
     const beersFromBrewery: Beer[] = beers.filter(beer => beer.brewer === breweryName);
 
     if (beersFromBrewery != null) {
-      switch(this.sortColumn) {
+      switch (this.sortColumn) {
         case('type'):
           beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.type < secondBeer.type ? -1 : 1);
           break;
         case('price'):
           beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.price - secondBeer.price);
           break;
-        default:  
-          beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.name < secondBeer.name ? -1 : 1);      
+        default:
+          beersFromBrewery.sort((firstBeer, secondBeer) => firstBeer.name < secondBeer.name ? -1 : 1);
           break;
       }
     }

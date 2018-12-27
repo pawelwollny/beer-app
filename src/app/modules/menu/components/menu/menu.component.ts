@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
+
 import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
