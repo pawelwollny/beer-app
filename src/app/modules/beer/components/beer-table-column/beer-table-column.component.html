@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div>{{ columnName }}</div>
   <mat-form-field>
-    <mat-select placeholder="Brewery" [value]="selectedBrewery" (selectionChange)="onSelectionChange($event)">
+    <mat-select placeholder="Brewery" [(ngModel)]="selectedBrewery" (selectionChange)="onSelectionChange($event)">
       <mat-option *ngFor="let brewery of breweries" [value]="brewery">
         {{ brewery }}
       </mat-option>
