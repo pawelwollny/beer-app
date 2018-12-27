@@ -28,7 +28,7 @@ export class BeerTableColumnComponent implements OnInit, OnChanges {
   constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    this.beersLimit = this.localStorageService.get('elementsLimit');
+    this.beersLimit = this.localStorageService.get('elementsLimit') || 15;
     this.sortColumn = this.localStorageService.get('sortColumn');
     this.selectedBrewery = this.localStorageService.get(`breweryName${this.columnName}`);
 

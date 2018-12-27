@@ -22,8 +22,8 @@ export class SettingsComponent implements OnInit {
               private settingsService: SettingsService) { }
 
   ngOnInit() {
-    this.elementsLimit = this.localStorageService.get('elementsLimit');
-    this.sortColumn = this.localStorageService.get('sortColumn');
+    this.elementsLimit = this.localStorageService.get('elementsLimit') || this.elementLoadingLimits[0];
+    this.sortColumn = this.localStorageService.get('sortColumn') || this.columnNames[0];
     this.isDarkThemeOn = this.localStorageService.get('isDarkThemeOn');
   }
 
