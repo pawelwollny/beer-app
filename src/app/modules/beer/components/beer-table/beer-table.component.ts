@@ -49,7 +49,7 @@ export class BeerTableComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  showFullSizeImage(imageUrl: string) {
+  showFullSizeImage(imageUrl: string): void {
     const image: GALLERY_IMAGE = { url: imageUrl };
     this.ngxImageGallery.images = [image];
     this.ngxImageGallery.open();
