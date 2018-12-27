@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  beerApiUrl: 'https://cors-anywhere.herokuapp.com/http://ontariobeerapi.ca/beers/' 
+  beerApiUrl: 'https://cors-anywhere.herokuapp.com/http://ontariobeerapi.ca/beers/'
 };
 
 /*

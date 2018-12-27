@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSlideToggleModule, MatSelectModule, MatDialogModule, MatDialogRef } from '@angular/material';
+import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
 import { SettingsComponent } from './settings.component';
-import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;

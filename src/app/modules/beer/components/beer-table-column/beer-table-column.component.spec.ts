@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatIconModule, MatTableModule, MatSelectModule } from '@angular/material';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalStorageService, LocalStorageModule } from 'angular-2-local-storage';
 
@@ -13,6 +15,7 @@ describe('BeerTableColumnComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
+        FormsModule,
         LocalStorageModule.withConfig({
           prefix: 'beer-app',
           storageType: 'localStorage'
