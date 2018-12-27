@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuComponent } from './menu.component';
+import { MatMenuModule, MatIconModule, MatToolbarModule, MatDialogModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -8,6 +10,13 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
+        MatToolbarModule,
+        RouterTestingModule
+      ],
       declarations: [ MenuComponent ]
     })
     .compileComponents();

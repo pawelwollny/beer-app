@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 
 import { BeerTableComponent } from './beer-table.component';
+import { BeerTableColumnComponent } from '../beer-table-column/beer-table-column.component';
+import { NgxImageGalleryComponent } from 'ngx-image-gallery';
+import { MatSelectModule, MatTableModule } from '@angular/material';
 
 describe('BeerTableComponent', () => {
   let component: BeerTableComponent;
@@ -8,7 +13,12 @@ describe('BeerTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BeerTableComponent ]
+      imports: [
+        HttpClientTestingModule,
+        MatSelectModule,
+        MatTableModule
+      ],
+      declarations: [ BeerTableComponent, BeerTableColumnComponent, NgxImageGalleryComponent ],
     })
     .compileComponents();
   }));
